@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img" aria-labelledby="title desc">
+<title id="title">ScreenSort workflow</title><desc id="desc">Choose a folder and file types, review matching items, then keep, move, or send them to Trash.</desc>
+<rect width="1200" height="330" rx="28" fill="#171923"/>
+<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" text-anchor="middle">
+<text x="600" y="56" fill="#dce5ff" font-size="27" font-weight="700">A small, deliberate sorting loop</text>
+<g fill="#242a3b" stroke="#75a6ff" stroke-width="2">
+<rect x="55" y="105" width="235" height="145" rx="18"/><rect x="345" y="105" width="235" height="145" rx="18"/><rect x="635" y="105" width="235" height="145" rx="18"/><rect x="925" y="105" width="220" height="145" rx="18"/>
+</g>
+<g fill="#78a9ff" font-size="17" font-weight="700"><text x="172" y="153">01</text><text x="462" y="153">02</text><text x="752" y="153">03</text><text x="1035" y="153">04</text></g>
+<g fill="#f4f6fc" font-size="19" font-weight="600"><text x="172" y="188">Choose a location</text><text x="462" y="188">Pick file types</text><text x="752" y="188">Review one by one</text><text x="1035" y="181">Keep · Move</text><text x="1035" y="208">or Trash</text></g>
+<g stroke="#9aa7c3" stroke-width="3" fill="none"><path d="M300 177h35m-10-9 10 9-10 9"/><path d="M590 177h35m-10-9 10 9-10 9"/><path d="M880 177h35m-10-9 10 9-10 9"/></g>
+<text x="600" y="292" fill="#aeb8ce" font-size="15">Scanning is limited to the selected folder's top level.</text>
+</g></svg>

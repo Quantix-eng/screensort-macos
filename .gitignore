@@ -1,0 +1,8 @@
+.DS_Store
+.build/
+.swiftpm/
+DerivedData/
+*.xcuserstate
+# Packaged app and installer are distributed through GitHub Releases
+dist/
+Assets/AppIcon.iconset/
