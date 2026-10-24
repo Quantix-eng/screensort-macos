@@ -50,7 +50,7 @@ The app is a SwiftUI executable organized into models, scanning and file-action 
 
 This build is ad-hoc signed and does not need a paid Apple Developer account. macOS will still show an unidentified-developer warning. Only use the download linked above. A Developer ID signature and notarization would remove that warning but require Apple Developer Program membership.
 
-ScreenSort was built with macOS 14 and should run on macOS 13 or later. This first packaged build is for testing; folder access, permissions, and undo behavior still need more edge-case review.
+The package targets macOS 13 or later. This first packaged build is for testing and has not been checked across every supported macOS version; folder access, permissions, and undo behavior still need more edge-case review.
 
 ## Source build
 
