@@ -108,6 +108,7 @@ struct SettingsView: View {
         }
         .frame(width: 700, height: 580)
         .onAppear {
+            viewModel.settingsAreOpen = true
             editingActions = viewModel.userActions
             editingDestinationFolders = viewModel.destinationFolders
             editingFolderShortcuts = viewModel.folderShortcuts
@@ -115,6 +116,7 @@ struct SettingsView: View {
             setupKeyRecording()
         }
         .onDisappear {
+            viewModel.settingsAreOpen = false
             stopKeyRecording()
         }
     }

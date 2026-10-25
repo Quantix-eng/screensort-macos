@@ -1,22 +1,46 @@
 import Foundation
+import Carbon.HIToolbox
 
 enum KeyboardLayout: String, Codable, CaseIterable {
+    case automatic = "AUTO"
     case qwerty = "QWERTY"
     case azerty = "AZERTY"
     case dvorak = "DVORAK"
 
     var displayName: String {
-        self.rawValue
+        if self == .automatic {
+            return "Auto (\(Self.detected.rawValue))"
+        }
+        return rawValue
     }
 
     static var savedLayout: KeyboardLayout {
         get {
-            let rawValue = UserDefaults.standard.string(forKey: "keyboardLayout") ?? "QWERTY"
-            return KeyboardLayout(rawValue: rawValue) ?? .qwerty
+            let rawValue = UserDefaults.standard.string(forKey: "keyboardLayout") ?? "AUTO"
+            return KeyboardLayout(rawValue: rawValue) ?? .automatic
         }
         set {
             UserDefaults.standard.set(newValue.rawValue, forKey: "keyboardLayout")
         }
+    }
+
+    static var detected: KeyboardLayout {
+        let inputSource = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
+        guard let property = TISGetInputSourceProperty(inputSource, kTISPropertyInputSourceID) else {
+            return .qwerty
+        }
+
+        let inputSourceID = Unmanaged<CFString>.fromOpaque(property)
+            .takeUnretainedValue() as String
+        let normalizedID = inputSourceID.lowercased()
+
+        if normalizedID.contains("dvorak") {
+            return .dvorak
+        }
+        if normalizedID.contains("french") || normalizedID.contains("belgian") || normalizedID.contains("azerty") {
+            return .azerty
+        }
+        return .qwerty
     }
 }
 
@@ -49,6 +73,13 @@ struct KeyboardLayoutMapping {
     static func getKeyName(keyCode: UInt16, layout: KeyboardLayout) -> String {
         let mapping: [UInt16: String] = {
             switch layout {
+            case .automatic:
+                switch detectedLayout {
+                case .automatic: return qwerty
+                case .qwerty: return qwerty
+                case .azerty: return azerty
+                case .dvorak: return dvorak
+                }
             case .azerty:
                 return azerty
             case .dvorak:
@@ -58,5 +89,9 @@ struct KeyboardLayoutMapping {
             }
         }()
         return mapping[keyCode] ?? "?"
+    }
+
+    private static var detectedLayout: KeyboardLayout {
+        KeyboardLayout.detected
     }
 }

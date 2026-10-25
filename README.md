@@ -1,9 +1,10 @@
 # ScreenSort
 
-<!-- DEMO VIDEO: Upload the MP4 in GitHub's README editor and put the generated attachment URL here on its own line. -->
-*Demo video coming soon.*
+<p><a href="https://github.com/Quantix-eng/screensort-macos/blob/main/Assets/demo.mp4"><img src="Assets/demo.gif" alt="Watch the ScreenSort demo" width="640"></a></p>
 
-![ScreenSort app icon](Assets/screensort-icon.png)
+<p><a href="https://github.com/Quantix-eng/screensort-macos/blob/main/Assets/demo.mp4">Open the video with sound</a></p>
+
+<p><img src="Assets/screensort-icon.png" alt="ScreenSort app icon" width="150"></p>
 
 A small macOS app for reviewing a pile of files one at a time. I use it to clear my Desktop: usually around 150 items in a weekly session, with an occasional pass through another folder.
 
@@ -26,6 +27,8 @@ The default bindings are configurable. Shortcuts are handled while the app is ac
 - Shows matching items one by one and moves to the next item after an action.
 - Sends unwanted items to the macOS Trash, moves items to a selected destination, or leaves them in place when skipped.
 - Keeps a short undo history for recent moves and Trash actions.
+- Detects common QWERTY, AZERTY, and Dvorak keyboard layouts and shows the matching key labels. You can still choose a layout manually.
+- Shows a brief shortcut reminder when a sorting session starts. Sorting shortcuts pause while Settings is open.
 
 The scanner does not search inside nested folders. Folder scanning, permissions, and undo behavior still need more edge-case review before I would call this release-ready.
 
@@ -75,3 +78,4 @@ This is a personal utility, not a claim that manual file triage is a new idea. F
 No license has been selected yet. Please do not reuse the code until one is added. The absence of third-party packages in `Package.swift` does not resolve the license for the project itself or prove that every generated line is free of third-party material.
 
 *Implementation note: I used Cursor and GitHub Copilot while developing the app.*
+

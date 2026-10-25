@@ -23,6 +23,7 @@ final class ScreenshotViewModel: ObservableObject {
 
     // New: category and source selection
     @Published var currentScreen: AppScreen = .welcome
+    @Published var settingsAreOpen = false
     @Published var selectedCategories: Set<FileCategory> = [.screenshots]
     @Published var scanLocation: ScanLocation = .desktopOnly
 

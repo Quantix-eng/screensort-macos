@@ -6,6 +6,7 @@ import AVFoundation
 struct ContentView: View {
     @EnvironmentObject private var viewModel: ScreenshotViewModel
     @State private var showSettings = false
+    @State private var showShortcutReminder = false
     @State private var eventMonitor: Any? = nil
 
     var body: some View {
@@ -19,6 +20,21 @@ struct ContentView: View {
         }
         .onAppear {
             setupKeyboardHandling()
+        }
+        .onChange(of: viewModel.currentScreen) { screen in
+            guard screen == .sorting else {
+                showShortcutReminder = false
+                return
+            }
+
+            withAnimation(.easeOut(duration: 0.2)) {
+                showShortcutReminder = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+                withAnimation(.easeIn(duration: 0.25)) {
+                    showShortcutReminder = false
+                }
+            }
         }
         .onDisappear {
             if let monitor = eventMonitor {
@@ -98,6 +114,14 @@ struct ContentView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
 
+            if showShortcutReminder && !viewModel.showCompletionScreen {
+                shortcutReminder
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .padding(.top, 58)
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .zIndex(1)
+            }
+
             // Top-right buttons
             VStack(alignment: .trailing, spacing: 0) {
                 HStack(spacing: 4) {
@@ -113,7 +137,10 @@ struct ContentView: View {
                     .help("Back to start")
 
                     // Settings button
-                    Button(action: { showSettings = true }) {
+                    Button(action: {
+                        viewModel.settingsAreOpen = true
+                        showSettings = true
+                    }) {
                         Image(systemName: "gear")
                             .font(.system(size: 18, weight: .semibold))
                             .frame(width: 36, height: 36)
@@ -124,6 +151,7 @@ struct ContentView: View {
                     .help("Settings (Cmd + ,)")
                     .sheet(isPresented: $showSettings) {
                         SettingsView(viewModel: viewModel)
+                            .onDisappear { viewModel.settingsAreOpen = false }
                     }
                 }
                 .padding(12)
@@ -163,7 +191,7 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                         if viewModel.canUndoAction {
-                            Label("Z", systemImage: "arrow.counterclockwise")
+                            Label(undoShortcutName, systemImage: "arrow.counterclockwise")
                                 .font(.system(size: 13, weight: .regular))
                                 .foregroundColor(.yellow)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -181,14 +209,70 @@ struct ContentView: View {
         }
     }
 
+    private var undoShortcutName: String {
+        guard let action = viewModel.userActions.first(where: { $0.type == .undo }) else {
+            return "Undo"
+        }
+        return KeyboardLayoutMapping.getKeyName(keyCode: action.keyCode, layout: KeyboardLayout.savedLayout)
+    }
+
+    private var shortcutReminder: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Label("Quick controls", systemImage: "keyboard")
+                    .font(.system(size: 14, weight: .semibold))
+                Spacer()
+                Button {
+                    withAnimation(.easeIn(duration: 0.2)) {
+                        showShortcutReminder = false
+                    }
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+                .help("Dismiss keyboard shortcut reminder")
+            }
+
+            HStack(spacing: 8) {
+                ForEach(viewModel.userActions) { action in
+                    VStack(spacing: 5) {
+                        Text(KeyboardLayoutMapping.getKeyName(
+                            keyCode: action.keyCode,
+                            layout: KeyboardLayout.savedLayout
+                        ))
+                        .font(.system(size: 12, weight: .bold, design: .monospaced))
+                        .frame(minWidth: 30)
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 5)
+                        .background(Color.accentColor.opacity(0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+
+                        Text(action.name)
+                            .font(.system(size: 10, weight: .medium))
+                            .lineLimit(1)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            }
+        }
+        .padding(12)
+        .frame(maxWidth: 440)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(.white.opacity(0.12), lineWidth: 1))
+        .shadow(color: .black.opacity(0.28), radius: 16, y: 7)
+    }
+
     // MARK: - Keyboard
     private func setupKeyboardHandling() {
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             // Only handle shortcuts in sorting mode
-            guard viewModel.currentScreen == .sorting else { return event }
+            guard viewModel.currentScreen == .sorting, !viewModel.settingsAreOpen else { return event }
 
             // Cmd+, for settings
             if event.modifierFlags.contains(.command) && event.keyCode == 41 {
+                viewModel.settingsAreOpen = true
                 showSettings = true
                 return nil
             }
