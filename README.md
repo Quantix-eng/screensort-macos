@@ -6,6 +6,19 @@
 
 <p><img src="Assets/screensort-icon.png" alt="ScreenSort app icon" width="150"></p>
 
+## Download and install
+
+[**Download ScreenSort for Mac (.dmg)**](https://github.com/Quantix-eng/screensort-macos/releases/latest/download/ScreenSort.dmg)
+
+1. Open the downloaded `ScreenSort.dmg` from Downloads.
+2. In the window that appears, drag **ScreenSort** onto **Applications**.
+3. Eject the ScreenSort disk image, then open the app from Applications.
+4. The first launch may be blocked because this test build is not notarized. Open **System Settings → Privacy & Security**, scroll to Security, and choose **Open Anyway** for ScreenSort. Confirm the prompt, then launch it again. [Apple's guide](https://support.apple.com/en-gb/guide/mac-help/mh40617/27/mac/27) has screenshots of this step.
+
+This build is ad-hoc signed and does not need a paid Apple Developer account. macOS will still show an unidentified-developer warning. Only use the download linked above. A Developer ID signature and notarization would remove that warning but require Apple Developer Program membership.
+
+The package targets macOS 13 or later. This first packaged build is for testing and has not been checked across every supported macOS version; folder access, permissions, and undo behavior still need more edge-case review.
+
 A small macOS app for reviewing a pile of files one at a time. I use it to clear my Desktop: usually around 150 items in a weekly session, with an occasional pass through another folder.
 
 The workflow is simple: choose a location and file types, review each match, then leave it in place, move it, or send it to Trash with a keypress.
@@ -41,19 +54,6 @@ I wanted a quick way to make decisions about files that had accumulated on my De
 ![High-level architecture](Assets/architecture.png)
 
 The app is a SwiftUI executable organized into models, scanning and file-action services, a view model, and views. The package manifest declares no third-party Swift package dependencies.
-
-## Download and install
-
-[**Download ScreenSort for Mac (.dmg)**](https://github.com/Quantix-eng/screensort-macos/releases/latest/download/ScreenSort.dmg)
-
-1. Open the downloaded `ScreenSort.dmg` from Downloads.
-2. In the window that appears, drag **ScreenSort** onto **Applications**.
-3. Eject the ScreenSort disk image, then open the app from Applications.
-4. The first launch may be blocked because this test build is not notarized. Open **System Settings → Privacy & Security**, scroll to Security, and choose **Open Anyway** for ScreenSort. Confirm the prompt, then launch it again. [Apple's guide](https://support.apple.com/en-gb/guide/mac-help/mh40617/27/mac/27) has screenshots of this step.
-
-This build is ad-hoc signed and does not need a paid Apple Developer account. macOS will still show an unidentified-developer warning. Only use the download linked above. A Developer ID signature and notarization would remove that warning but require Apple Developer Program membership.
-
-The package targets macOS 13 or later. This first packaged build is for testing and has not been checked across every supported macOS version; folder access, permissions, and undo behavior still need more edge-case review.
 
 ## Source build
 
