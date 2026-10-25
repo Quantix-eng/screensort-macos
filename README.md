@@ -75,7 +75,9 @@ This is a personal utility, not a claim that manual file triage is a new idea. F
 
 ## License
 
-No license has been selected yet. Please do not reuse the code until one is added. The absence of third-party packages in `Package.swift` does not resolve the license for the project itself or prove that every generated line is free of third-party material.
+The source code in `Sources/` is licensed under MIT; see [LICENSE](LICENSE). The visual assets in `Assets/` are excluded from this license, and this repository does not grant permission to reuse them.
+
+No third-party Swift package dependencies are declared in `Package.swift`. That alone does not establish the provenance of all generated code.
 
 *Implementation note: I used Cursor and GitHub Copilot while developing the app.*
 
