@@ -1,10 +1,10 @@
-# ScreenSort
+<p align="center"><img src="Assets/screensort-icon.png" alt="ScreenSort icon" width="128"></p>
 
-<p><a href="https://github.com/Quantix-eng/screensort-macos/blob/main/Assets/demo.mp4"><img src="Assets/demo.gif" alt="Watch the ScreenSort demo" width="640"></a></p>
+<h1 align="center">ScreenSort</h1>
 
-<p><a href="https://github.com/Quantix-eng/screensort-macos/blob/main/Assets/demo.mp4">Open the video with sound</a></p>
+<p align="center"><em>Sort your files, one decision at a time.</em></p>
 
-<p><img src="Assets/screensort-icon.png" alt="ScreenSort app icon" width="150"></p>
+<p align="center"><a href="https://github.com/Quantix-eng/screensort-macos/blob/main/Assets/demo.mp4"><img src="Assets/demo.gif" alt="Watch the ScreenSort demo" width="640"></a></p>
 
 ## Download and install
 
